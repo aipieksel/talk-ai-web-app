@@ -1,6 +1,6 @@
 import assert from "node:assert/strict";
 import { execFile } from "node:child_process";
-import { copyFileSync, mkdirSync, mkdtempSync, symlinkSync, writeFileSync } from "node:fs";
+import { copyFileSync, mkdirSync, mkdtempSync, readFileSync, symlinkSync, writeFileSync } from "node:fs";
 import { tmpdir } from "node:os";
 import { join } from "node:path";
 import { test } from "node:test";
@@ -13,6 +13,7 @@ import {
   projectRoot,
   readAppEnv,
 } from "./with-app-env.mjs";
+import { authEnabledFromEnvValue } from "./check-auth-invariant.mjs";
 
 const execFileAsync = promisify(execFile);
 const WRAPPER = join(projectRoot(), "scripts/with-app-env.mjs");
@@ -67,8 +68,9 @@ test("an explicit process-env override wins over the file", () => {
   assert.equal(merged.PATH, "/usr/bin");
 });
 
-test("Talk AI ships authentication enabled", () => {
-  assert.deepEqual(readAppEnv(projectRoot()), { VITE_AUTH_ENABLED: "true" });
+test("Talk AI starter config enables authentication", () => {
+  assert.match(readFileSync(join(projectRoot(), ".env.example"), "utf8"), /^VITE_AUTH_ENABLED=true$/m);
+  assert.equal(authEnabledFromEnvValue(undefined), true);
 });
 
 test("vite loadEnv resolves the wrapped value", () => {

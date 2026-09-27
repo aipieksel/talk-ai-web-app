@@ -2,7 +2,15 @@
 
 Maintained by [aipieksel](https://github.com/aipieksel).
 
-A React/TanStack Start **website** for recording and transcribing speech, organizing a private text library, running reusable prompts, and managing AI provider settings. It includes email/password sign-in, per-user encrypted vaults, and optional local app locking. There is no Electron or Mac app wrapper.
+Talk AI is a web workspace for turning speech into useful text and keeping that text organized. Record and transcribe, save material in a private library, apply reusable prompts, and choose the AI or transcription provider used for a task. The site supports email/password accounts, per-user encrypted vaults, and an optional local app lock.
+
+The application is built with React and TanStack Start. A browser connects to a local or hosted server; there is no Mac or Electron wrapper in this repository. Account data and provider credentials require your own private configuration. Selected content is sent to a provider only when you use a configured AI or transcription operation.
+
+## How it works
+
+1. Sign in, or use the device-local guest option when server vault access is unnecessary.
+2. Record or add text, then organize it in your library.
+3. Run a saved prompt or transcription flow with the provider and settings you configured.
 
 ## Local setup
 
